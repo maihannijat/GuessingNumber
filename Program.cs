@@ -1,60 +1,32 @@
 ﻿using System;
 
-namespace GuessingGame
+namespace inputGuessingGame
 {
     class MainClass
     {
         public static void Main(string[] args)
         {
-            // Generate random number and assign it to a variable.
-            int randomNumber = new Random().Next(1, 101);
-
             // Welcome users
-            Console.WriteLine("Welcome to Guess Game!");
+            Console.WriteLine("Welcome to inputGuess Game!");
 
-            // Count each guess and stop if attemtps reach to 7.
-            int guess;
-            int countGuess = 0;
+			// Generate random number and assign it to a variable.
+			int randomNumber = new Random().Next(1, 101);
+
+            // Count each inputGuess and stop if attemtps reach to 7.
+            int inputGuess;
+            int countInputGuess = 0;
             Boolean userWin = false;
-
-            // Validate number function and returns number
-            Boolean validateInput(String userInput){
-
-                if(int.TryParse(userInput, out guess)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-			// Evaluate answer function to determine WIN or LOST
-            String evaluateAnswer() {
-                if(guess == randomNumber) {
-                    userWin = true;
-                    return $"YOU WIN. The number is { randomNumber } and your guess is { guess } :) \n";
-                } else if(countGuess == 7){
-                    return $"\nYou Lost! You have tried { countGuess } times with no luck :( Random Number is { randomNumber } \n";
-                }
-                else {
-                    if (guess < randomNumber)
-                    {
-                        return $"Guess is too low! You have attempted { countGuess } times. \n";
-                    } else {
-						return $"Guess is too high! You have attempted { countGuess } times. \n";
-					}
-				}
-            }
 
             // Play game function. calls validateInput and evaluateAnswer methods.
             void playGame()
             {
-                while (countGuess != 7 && userWin != true)
+                while (countInputGuess != 7 && userWin != true)
                 {
 					// Ask user for input
-					Console.WriteLine("Please enter your guess between 1 and 100!");
+					Console.WriteLine("\nPlease enter your guess between 1 and 100!");
 
 					// Increase by one each time student attempt an answer
-					countGuess++;
+					countInputGuess++;
 
                     var userInput = Console.ReadLine();
 
@@ -71,21 +43,60 @@ namespace GuessingGame
 
             playGame();
 
-            String playAgain = "";
+			// Validate number function and returns number
+			Boolean validateInput(String userInput)
+			{
+
+				if (int.TryParse(userInput, out inputGuess))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			// Evaluate answer function to determine WIN or LOST
+			String evaluateAnswer()
+			{
+				if (inputGuess == randomNumber)
+				{
+					userWin = true;
+					return $"YOU WIN. The number is { randomNumber } and your inputGuess is { inputGuess } :) \n";
+				}
+				else if (countInputGuess == 7)
+				{
+					return $"\nYou Lost! You have tried { countInputGuess } times with no luck :( Random Number is { randomNumber } \n";
+				}
+				else
+				{
+					if (inputGuess < randomNumber)
+					{
+						return $"Guess is too low! You have attempted { countInputGuess } times. \n";
+					}
+					else
+					{
+						return $"Guess is too high! You have attempted { countInputGuess } times. \n";
+					}
+				}
+			}
 
             // Reset game function to start again or quite game
-            void resetGame(){
-				Console.WriteLine("Do you want to play again? Y or N");
+            Boolean resetGame(){
+				Console.WriteLine("\nDo you want to play again? Y for yes");
 				userWin = false;
-                countGuess = 0;
-				playAgain = Console.ReadLine().ToUpper();  
+                countInputGuess = 0;
+
+                if (Console.ReadKey().Key == ConsoleKey.Y)
+                {
+                    return true;
+                }
+                else return false;
             }
 
-            resetGame();
-
-
             // Keep playing if user is interested.
-            while(playAgain == "Y") {
+            while(resetGame()) {
 				playGame();
 				resetGame();
 			}
