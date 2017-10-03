@@ -8,3 +8,5 @@ The rules of this game are simple:
  - The program begins by randomly generating a number between 1 and 100.
  - The random number is winning number used to compare against users input.
  - Game prompts user for input
+
+The game is based on Visual Basic and all code is available in program.cs file.
